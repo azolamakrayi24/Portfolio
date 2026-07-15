@@ -1,8 +1,27 @@
-// header background on scroll
+document.addEventListener('DOMContentLoaded', () => {
+
+  // header background on scroll
   const header = document.getElementById('siteHeader');
   window.addEventListener('scroll', () => {
     header.classList.toggle('scrolled', window.scrollY > 10);
   });
+
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    // close the mobile menu after tapping a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+  }
 
   // typed hero line
   const lines = [
@@ -25,7 +44,7 @@
     }
     setTimeout(tick, deleting ? 35 : 55);
   }
-  tick();
+  if (typedEl) tick();
 
   // scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
@@ -33,3 +52,5 @@
     entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.12 });
   revealEls.forEach(el=>io.observe(el));
+
+});
